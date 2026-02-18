@@ -2,8 +2,10 @@ import React, { useEffect } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { X } from "lucide-react";
 
+type ProductId = "novamax-anti-deicer" | "novamax-sfd" | "heat-line";
+
 export type ProductDetails = {
-  id: "novamax-anti-deicer" | "novamax-sfd" | "heat-line";
+  id: ProductId;
   title: string;
   imageSrc: string;
   imageAlt: string;
@@ -57,7 +59,7 @@ export function ProductDetailsModal({
           onClick={onClose}
         >
           <motion.div
-            className="flex max-h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl bg-white shadow-2xl"
+            className="w-full max-w-5xl overflow-hidden rounded-2xl bg-white shadow-2xl max-h-[92vh] flex flex-col"
             initial={{ opacity: 0, y: 18, scale: 0.99 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 18, scale: 0.99 }}
@@ -89,11 +91,11 @@ export function ProductDetailsModal({
 
             <div className="flex-1 overflow-y-auto">
               <div className="grid md:grid-cols-2">
-                <div className="flex items-center justify-center bg-slate-50 p-4 sm:p-6">
+                <div className="bg-slate-50 flex items-center justify-center p-4 sm:p-6">
                   <img
                     src={product.imageSrc}
                     alt={product.imageAlt}
-                    className="max-h-[42vh] w-auto max-w-full rounded-xl object-contain md:max-h-[60vh]"
+                    className="max-h-[42vh] md:max-h-[60vh] w-auto max-w-full object-contain rounded-xl"
                     loading="lazy"
                   />
                 </div>

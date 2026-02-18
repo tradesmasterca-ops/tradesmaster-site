@@ -25,18 +25,35 @@ function ImageCard({ img }: { img: GalleryImage }): React.JSX.Element {
 }
 
 export function GallerySection(): React.JSX.Element {
+  const baseUrl = import.meta.env.BASE_URL; // e.g. "/tradesmaster-site/"
+
+  const withBase = (pathFromPublic: string): string =>
+    `${baseUrl}${pathFromPublic.replace(/^\/+/, "")}`;
+
   const summerFall: readonly GalleryImage[] = [
-    { src: "/Summer&Fall/GrassBefore.jpg", label: "Grass cutting (before)" },
-    { src: "/Summer&Fall/GrassAfter.jpg", label: "Grass cutting (after)" },
-    { src: "/Summer&Fall/Driveway.jpg", label: "Driveway cleanup" },
-    { src: "/Summer&Fall/Shed.jpg", label: "Yard cleanup" },
+    {
+      src: withBase("Summer&Fall/GrassBefore.jpg"),
+      label: "Grass cutting (before)",
+    },
+    {
+      src: withBase("Summer&Fall/GrassAfter.jpg"),
+      label: "Grass cutting (after)",
+    },
+    { src: withBase("Summer&Fall/Driveway.jpg"), label: "Driveway cleanup" },
+    { src: withBase("Summer&Fall/Shed.jpg"), label: "Yard cleanup" },
   ];
 
   const winterSpring: readonly GalleryImage[] = [
-    { src: "/Winter&Spring/winter1.jpg", label: "Snow plowing" },
-    { src: "/Winter&Spring/winter2.jpg", label: "Winter service" },
-    { src: "/Winter&Spring/SnowStairs1.jpg", label: "Stairs clearing" },
-    { src: "/Winter&Spring/SnowStairs2.jpg", label: "Ice & snow removal" },
+    { src: withBase("Winter&Spring/winter1.jpg"), label: "Snow plowing" },
+    { src: withBase("Winter&Spring/winter2.jpg"), label: "Winter service" },
+    {
+      src: withBase("Winter&Spring/SnowStairs1.jpg"),
+      label: "Stairs clearing",
+    },
+    {
+      src: withBase("Winter&Spring/SnowStairs2.jpg"),
+      label: "Ice & snow removal",
+    },
   ];
 
   return (

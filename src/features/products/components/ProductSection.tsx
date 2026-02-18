@@ -51,7 +51,6 @@ function ProductCard({
           </div>
           <div className="text-base font-semibold">{title}</div>
         </div>
-
         <p className="mt-3 text-sm text-slate-600">{description}</p>
 
         {clickable && (
@@ -66,12 +65,14 @@ function ProductCard({
 
 export function ProductSection(): React.JSX.Element {
   const baseUrl = import.meta.env.BASE_URL;
+  const withBase = (pathFromPublic: string): string =>
+    `${baseUrl}${pathFromPublic.replace(/^\/+/, "")}`;
 
   const novamaxAntiDeicer = useMemo<ProductDetails>(
     () => ({
       id: "novamax-anti-deicer",
       title: "NovaMax Anti/DeIcer",
-      imageSrc: `${baseUrl}NovaMax1.png`,
+      imageSrc: withBase("NovaMax1.png"),
       imageAlt: "NovaMax Anti/DeIcer",
       bullets: [
         "Bio Degradable",
@@ -96,7 +97,7 @@ export function ProductSection(): React.JSX.Element {
     () => ({
       id: "novamax-sfd",
       title: "NovaMax SFD — Granular Runway Deicer",
-      imageSrc: `${baseUrl}NovaMax2.png`,
+      imageSrc: withBase("NovaMax2.png"),
       imageAlt: "NovaMax SFD",
       bullets: [
         "Advanced sodium formate-based solid deicer",
@@ -121,7 +122,7 @@ export function ProductSection(): React.JSX.Element {
     () => ({
       id: "heat-line",
       title: "Heat-Line Cable",
-      imageSrc: `${baseUrl}Heat-line.jpg.webp`,
+      imageSrc: withBase("Heat-line.jpg.webp"),
       imageAlt: "Heat-Line Cable",
       bullets: [
         "All-in-one self-regulating heating cable system",
@@ -138,9 +139,7 @@ export function ProductSection(): React.JSX.Element {
     [baseUrl],
   );
 
-  const [activeProduct, setActiveProduct] = useState<ProductDetails | null>(
-    null,
-  );
+  const [active, setActive] = useState<ProductDetails | null>(null);
 
   return (
     <section className="border-b border-slate-200">
@@ -150,7 +149,6 @@ export function ProductSection(): React.JSX.Element {
           whileInView={{ opacity: 1, y: 0 }}
         >
           <h1 className="text-3xl font-semibold md:text-4xl">Products</h1>
-
           <p className="mt-3 max-w-2xl text-sm text-slate-600 md:text-base">
             No e-commerce checkout here — request a quote and we’ll match the
             right product to your situation.
@@ -161,36 +159,36 @@ export function ProductSection(): React.JSX.Element {
               title="NovaMax Anti/DeIcer"
               description="Liquid ice control solution for safer surfaces."
               icon={<Droplets className="h-5 w-5" />}
-              imageSrc={`${baseUrl}NovaMax1.png`}
+              imageSrc={novamaxAntiDeicer.imageSrc}
               clickable
-              onClick={() => setActiveProduct(novamaxAntiDeicer)}
+              onClick={() => setActive(novamaxAntiDeicer)}
             />
 
             <ProductCard
               title="NovaMax SFD"
               description="Granular runway and heavy-duty surface deicer."
               icon={<Snowflake className="h-5 w-5" />}
-              imageSrc={`${baseUrl}NovaMax2.png`}
+              imageSrc={novamaxSfd.imageSrc}
               clickable
-              onClick={() => setActiveProduct(novamaxSfd)}
+              onClick={() => setActive(novamaxSfd)}
             />
 
             <ProductCard
               title="Heat-Line Cable"
               description="Freeze protection for pipes and critical systems."
               icon={<Cable className="h-5 w-5" />}
-              imageSrc={`${baseUrl}Heat-line.jpg.webp`}
+              imageSrc={heatLine.imageSrc}
               clickable
-              onClick={() => setActiveProduct(heatLine)}
+              onClick={() => setActive(heatLine)}
             />
           </div>
         </motion.div>
       </div>
 
       <ProductDetailsModal
-        open={activeProduct !== null}
-        product={activeProduct}
-        onClose={() => setActiveProduct(null)}
+        open={active !== null}
+        product={active}
+        onClose={() => setActive(null)}
       />
     </section>
   );

@@ -1,82 +1,82 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-type Season = "Winter & Spring" | "Summer & Fall";
-
 type Slide = {
   src: string;
   alt: string;
-  season: Season;
+  season: "Winter & Spring" | "Summer & Fall";
 };
 
 export function AboutSection(): React.JSX.Element {
-  const baseUrl = import.meta.env.BASE_URL;
+  const baseUrl = import.meta.env.BASE_URL; // e.g. "/tradesmaster-site/"
+  const withBase = (pathFromPublic: string): string =>
+    `${baseUrl}${pathFromPublic.replace(/^\/+/, "")}`;
 
   const slides = useMemo<readonly Slide[]>(
     () => [
       {
-        src: `${baseUrl}Winter&Spring/winter1.jpg`,
+        src: withBase("Winter&Spring/winter1.jpg"),
         alt: "Snow plowing service",
         season: "Winter & Spring",
       },
       {
-        src: `${baseUrl}Winter&Spring/winter2.jpg`,
+        src: withBase("Winter&Spring/winter2.jpg"),
         alt: "Winter service work",
         season: "Winter & Spring",
       },
       {
-        src: `${baseUrl}Winter&Spring/SnowStairs1.jpg`,
+        src: withBase("Winter&Spring/SnowStairs1.jpg"),
         alt: "Stairs snow clearing",
         season: "Winter & Spring",
       },
       {
-        src: `${baseUrl}Winter&Spring/SnowStairs2.jpg`,
+        src: withBase("Winter&Spring/SnowStairs2.jpg"),
         alt: "Ice & snow removal",
         season: "Winter & Spring",
       },
       {
-        src: `${baseUrl}Winter&Spring/SnowStairs3.jpg`,
+        src: withBase("Winter&Spring/SnowStairs3.jpg"),
         alt: "Snow clearing detail",
         season: "Winter & Spring",
       },
 
       {
-        src: `${baseUrl}Summer&Fall/GrassBefore.jpg`,
+        src: withBase("Summer&Fall/GrassBefore.jpg"),
         alt: "Grass cutting (before)",
         season: "Summer & Fall",
       },
       {
-        src: `${baseUrl}Summer&Fall/GrassAfter.jpg`,
+        src: withBase("Summer&Fall/GrassAfter.jpg"),
         alt: "Grass cutting (after)",
         season: "Summer & Fall",
       },
       {
-        src: `${baseUrl}Summer&Fall/Driveway.jpg`,
+        src: withBase("Summer&Fall/Driveway.jpg"),
         alt: "Driveway cleanup",
         season: "Summer & Fall",
       },
       {
-        src: `${baseUrl}Summer&Fall/Shed.jpg`,
+        src: withBase("Summer&Fall/Shed.jpg"),
         alt: "Yard cleanup",
         season: "Summer & Fall",
       },
       {
-        src: `${baseUrl}Summer&Fall/Alley.jpg`,
+        src: withBase("Summer&Fall/Alley.jpg"),
         alt: "Alley cleanup work",
         season: "Summer & Fall",
       },
       {
-        src: `${baseUrl}Summer&Fall/Alley2.jpg`,
+        src: withBase("Summer&Fall/Alley2.jpg"),
         alt: "Alley cleanup result",
         season: "Summer & Fall",
       },
       {
-        src: `${baseUrl}Summer&Fall/StairsBefore.jpg`,
+        src: withBase("Summer&Fall/StairsBefore.jpg"),
         alt: "Stairs (before)",
         season: "Summer & Fall",
       },
       {
-        src: `${baseUrl}Summer&Fall/StairsAfter.jpg`,
+        src: withBase("Summer&Fall/StairsAfter.jpg"),
         alt: "Stairs (after)",
         season: "Summer & Fall",
       },
@@ -84,30 +84,19 @@ export function AboutSection(): React.JSX.Element {
     [baseUrl],
   );
 
-  const [activeSeason, setActiveSeason] = useState<Season>("Winter & Spring");
   const [index, setIndex] = useState(0);
 
-  const seasonSlides = useMemo<readonly Slide[]>(
-    () => slides.filter((s) => s.season === activeSeason),
-    [slides, activeSeason],
-  );
-
-  function setSeason(next: Season): void {
-    setActiveSeason(next);
-    setIndex(0);
-  }
-
   useEffect(() => {
-    if (seasonSlides.length === 0) return;
+    if (slides.length === 0) return;
 
     const id = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % seasonSlides.length);
+      setIndex((prev) => (prev + 1) % slides.length);
     }, 3500);
 
     return () => window.clearInterval(id);
-  }, [seasonSlides.length]);
+  }, [slides.length]);
 
-  const current = seasonSlides[index] ?? seasonSlides[0];
+  const current = slides[index];
 
   return (
     <section id="about" className="bg-slate-50">
@@ -141,33 +130,6 @@ export function AboutSection(): React.JSX.Element {
               River, Centennial, Guildwood, and Markham.
             </p>
 
-            <div className="mt-6 inline-flex rounded-2xl border border-slate-200 bg-white p-1 shadow-sm">
-              <button
-                type="button"
-                onClick={() => setSeason("Winter & Spring")}
-                className={[
-                  "rounded-xl px-4 py-2 text-sm font-semibold transition",
-                  activeSeason === "Winter & Spring"
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-700 hover:bg-slate-100",
-                ].join(" ")}
-              >
-                Winter &amp; Spring
-              </button>
-              <button
-                type="button"
-                onClick={() => setSeason("Summer & Fall")}
-                className={[
-                  "rounded-xl px-4 py-2 text-sm font-semibold transition",
-                  activeSeason === "Summer & Fall"
-                    ? "bg-slate-900 text-white"
-                    : "text-slate-700 hover:bg-slate-100",
-                ].join(" ")}
-              >
-                Summer &amp; Fall
-              </button>
-            </div>
-
             <div className="mt-7 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm md:p-6">
               <h3 className="text-sm font-semibold tracking-wide text-slate-900">
                 What Tradesmaster stands for
@@ -192,12 +154,12 @@ export function AboutSection(): React.JSX.Element {
 
           <div className="relative">
             <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white shadow-lg">
-              <div className="relative aspect-[4/3] w-full bg-slate-50 sm:aspect-[16/10] lg:aspect-[4/5]">
+              <div className="aspect-[4/3] w-full bg-slate-50 sm:aspect-[16/10] lg:aspect-[4/5]">
                 <AnimatePresence mode="wait">
                   <motion.img
-                    key={current?.src ?? "empty"}
-                    src={current?.src ?? ""}
-                    alt={current?.alt ?? ""}
+                    key={current.src}
+                    src={current.src}
+                    alt={current.alt}
                     className="absolute inset-0 h-full w-full object-cover"
                     initial={{ opacity: 0, scale: 1.01 }}
                     animate={{ opacity: 1, scale: 1 }}
@@ -209,7 +171,7 @@ export function AboutSection(): React.JSX.Element {
               </div>
 
               <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/40 bg-black/35 px-3 py-1 text-xs font-semibold text-white backdrop-blur">
-                {activeSeason}
+                {current.season}
               </div>
             </div>
 
