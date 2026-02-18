@@ -1,4 +1,6 @@
+// src/layout/components/Footer.tsx
 import React from "react";
+import { Link } from "react-router-dom";
 import { Phone, Mail, Facebook, Instagram } from "lucide-react";
 
 export function Footer(): React.JSX.Element {
@@ -45,19 +47,19 @@ export function Footer(): React.JSX.Element {
             <h4 className="text-sm font-semibold text-slate-900">Links</h4>
             <ul className="mt-4 space-y-2 text-sm text-slate-600">
               <li>
-                <a href="/products" className="hover:text-slate-900">
+                <Link to="/products" className="hover:text-slate-900">
                   Products
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/privacy" className="hover:text-slate-900">
+                <Link to="/privacy" className="hover:text-slate-900">
                   Privacy
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/cookies" className="hover:text-slate-900">
+                <Link to="/cookies" className="hover:text-slate-900">
                   Cookies
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

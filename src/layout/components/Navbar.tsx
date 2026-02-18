@@ -1,3 +1,4 @@
+// src/layout/components/Navbar.tsx
 import React, { useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { X, Menu, Snowflake, Leaf, Package } from "lucide-react";
@@ -72,10 +73,10 @@ export function Navbar(): React.JSX.Element {
           className="flex items-center gap-3"
           onClick={closeMobile}
         >
-          {/* LOGO (updated) */}
+          {/* LOGO */}
           <div className="grid h-12 w-12 place-items-center overflow-hidden rounded-xl bg-white">
             <img
-              src="/Shield.png"
+              src={`${import.meta.env.BASE_URL}Shield.png`}
               alt="Tradesmaster logo"
               className="h-full w-full object-contain"
               loading="eager"

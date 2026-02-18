@@ -1,3 +1,4 @@
+// src/features/cookies/CookieBanner.tsx
 import React, { useEffect } from "react";
 import * as CookieConsent from "vanilla-cookieconsent";
 import "vanilla-cookieconsent/dist/cookieconsent.css";
@@ -8,6 +9,10 @@ export function CookieBanner(): React.JSX.Element | null {
     const w = window as unknown as { __tm_cc_inited?: boolean };
     if (w.__tm_cc_inited) return;
     w.__tm_cc_inited = true;
+
+    const base = import.meta.env.BASE_URL;
+    const privacyHref = `${base}privacy`;
+    const cookiesHref = `${base}cookies`;
 
     CookieConsent.run({
       guiOptions: {
@@ -45,8 +50,7 @@ export function CookieBanner(): React.JSX.Element | null {
               acceptAllBtn: "Accept all",
               acceptNecessaryBtn: "Reject optional",
               showPreferencesBtn: "Manage preferences",
-              footer:
-                '<a href="/privacy">Privacy</a> • <a href="/cookies">Cookies</a>',
+              footer: `<a href="${privacyHref}">Privacy</a> • <a href="${cookiesHref}">Cookies</a>`,
             },
             preferencesModal: {
               title: "Cookie preferences",
@@ -69,8 +73,7 @@ export function CookieBanner(): React.JSX.Element | null {
                 },
                 {
                   title: "More info",
-                  description:
-                    'Read our <a href="/privacy">Privacy Policy</a> and <a href="/cookies">Cookie Policy</a>.',
+                  description: `Read our <a href="${privacyHref}">Privacy Policy</a> and <a href="${cookiesHref}">Cookie Policy</a>.`,
                 },
               ],
             },
